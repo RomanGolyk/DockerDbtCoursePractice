@@ -1,0 +1,56 @@
+sources:
+  - name: demo_src
+    description: "data from DB airflights"
+    tables:
+          - name: aircrafts
+            description: "aircraft models"
+            columns: 
+              - name: aircraft_code
+                description: "code of aircraft model"
+              - name: model
+                description: "model name of aircraft"
+              - name: "range"
+                description: "max flight distance/range"
+          - name: airports
+            description: "airports"
+            columns: 
+              - name: airport_code
+                description: "code of airport"
+              - name: airport_name
+                description: "name of the airport"
+              - name: city
+                description: "city of the airport"
+              - name: coordinates
+                description: "geo coordinates of the airport"
+              - name: "timezone"
+                description: "timezone of the airport"
+          - name: seats
+            description: "seats in an aircrafts"
+            columns: 
+              - name: aircraft_code
+                description: "code of aircraft model"
+              - name: seat_no
+                description: "number of the seat on the aircraft plan"
+              - name: fare_conditions
+                description: "fare conditions for the seat"
+          - name: bookings
+            description: "bookings records details"
+            columns: 
+            # book_ref, book_date, total_amount
+              - name: book_ref
+                # description: "booking referential number"
+              - name: book_date
+                # description: "booking timestamp"
+              - name: total_amount
+                # description: "booking total payment amount"
+            config:
+              freshness: # make this a little more strict
+                warn_after: 
+                  count: 79000
+                  period: hour
+                error_after: 
+                  count: 10000
+                  period: day
+                # Apply a where clause in the freshness query
+                filter: (current_timestamp::date - book_date::date) < 10000
+              loaded_at_field: book_date::timestamp
