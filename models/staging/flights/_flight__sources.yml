@@ -54,3 +54,29 @@ sources:
                 # Apply a where clause in the freshness query
                 filter: (current_timestamp::date - book_date::date) < 10000
               loaded_at_field: book_date::timestamp
+          - name: boarding_passes
+            description: "boardings in an aircrafts by flights"
+            columns: 
+              - name: ticket_no
+              - name: flight_id
+              - name: boarding_no
+              - name: seat_no
+          - name: flights
+            description: "flights per aircrafts"
+            columns: 
+              - name: flight_no
+              - name: scheduled_departure
+              - name: scheduled_arrival
+              - name: departure_airport
+              - name: arrival_airport
+              - name: status
+              - name: aircraft_code
+              - name: actual_departure
+              - name: actual_arrival
+          - name: ticket_flights
+            description: "tickets by flights"
+            columns: 
+              - name: ticket_no
+              - name: flight_id
+              - name: fare_conditions
+              - name: amount
